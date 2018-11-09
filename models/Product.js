@@ -5,4 +5,5 @@ module.exports = function (connection, Sequelize) {
         price: Sequelize.STRING,
         stock_quantity: Sequelize.INTEGER
     })
+    return Product;
 }
