@@ -9,18 +9,18 @@ $(function () {
           <p class="card-text">Price: ${products[i].price}</p>
           <div class="form-group">
     <label for="formGroupExampleInput">How many</label>
-    <input type="text" class="form-control" id="purchaseQuantity" placeholder="Enter a number">
+    <input type="text" class="form-control purchaseQuantity" placeholder="Enter a number">
   </div>
-          <button id="purchaseButton" type="button" class="btn btn-primary" data-name="${products[i].product_name}"
+          <button id="purchaseButton" type="button" class="btn btn-primary purchaseButton" data-name="${products[i].product_name}"
           data-price="${products[i].price}" data-quantity="${products[i].stock_quantity}" data-department="${products[i].department_name}">Purchase</button>
         </div>
       </div>`);
         }
     })
 
-    $('#product').on('click', '#purchaseButton', function (e) {
+    $('#product').on('click', '.purchaseButton', function (e) {
         e.preventDefault();
-        const quantity = $('#purchaseQuantity').val()
+        const quantity = $('.purchaseQuantity').val()
         const available = $(this).attr("data-quantity")
         const price = Number($(this).attr("data-price"))
         const cost = (price*quantity)
@@ -48,8 +48,7 @@ $(function () {
         } else {
            $('#product').empty();
            $('#product').text('Sorry, Insufficent quantity');
-        }
-            
+        }           
        
     })
 })
