@@ -11,17 +11,45 @@ $(function () {
     <label for="formGroupExampleInput">How many</label>
     <input type="text" class="form-control" id="purchaseQuantity" placeholder="Enter a number">
   </div>
-          <button id="purchaseButton" type="button" class="btn btn-primary">Purchase</button>
+          <button id="purchaseButton" type="button" class="btn btn-primary" data-name="${products[i].product_name}"
+          data-price="${products[i].price}" data-quantity="${products[i].stock_quantity}" data-department="${products[i].department_name}">Purchase</button>
         </div>
       </div>`);
         }
     })
 
-
-    $('#purchaseButton').on('click', function (e) {
+    $('#product').on('click', '#purchaseButton', function (e) {
         e.preventDefault();
+        const quantity = $('#purchaseQuantity').val()
+        const available = $(this).attr("data-quantity")
+        const price = Number($(this).attr("data-price"))
+        const cost = (price*quantity)
+        console.log(available)
+        console.log(quantity)
+        if( quantity < available) {
 
-        
+            const update = {
+                product_name: $(this).attr("data-name"),
+                department_name: $(this).attr("data-department"),
+                price: $(this).attr("data-price"),
+                stock_quantity: (available-quantity)
+            }
+            $.ajax({
+                url: `api/products/${$(this).attr("data-name")}`,
+                method: 'PUT',
+                data: update
+            }).then(function(data) {
+
+                $('#product').empty();
+                $('#product').append(`<h1>Your total is ${cost}</h1>`);
+
+            })
+
+        } else {
+           $('#product').empty();
+           $('#product').text('Sorry, Insufficent quantity');
+        }
+            
        
     })
 })
