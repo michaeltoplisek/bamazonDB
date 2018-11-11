@@ -20,7 +20,7 @@ $(function () {
 
     $('#product').on('click', '.purchaseButton', function (e) {
         e.preventDefault();
-        const quantity = $('.purchaseQuantity').val()
+        const quantity = Number($('.purchaseQuantity').val())
         const available = $(this).attr("data-quantity")
         const price = Number($(this).attr("data-price"))
         const cost = (price*quantity)
